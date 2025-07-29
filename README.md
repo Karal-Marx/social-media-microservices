@@ -1,127 +1,131 @@
-Social Media Microservices Backend
+SOCIAL MEDIA MICROSERVICES BACKEND
+A modular, scalable backend system for a social media platform, built using microservice architecture. It includes an API Gateway, Authentication/Authorization service, and a Post management service, communicating over REST and protected with JWT.
 
-A modular, microservices-based backend system for a social media platform, built using Node.js and Express.js. This project currently includes three core services:
+-----------------------------------------------------------------------------
+🔧 Tech Stack
+Languages & Frameworks:
 
-API Gateway
+- Node.js, Express.js
 
-Identity Service (Authentication & Authorization)
+Tools & Technologies:
 
-Post Service (CRUD for user posts)
+- Redis, MongoDB, JWT, Winston, Cloudinary, Multer
 
-All services are containerized and communicate via REST APIs, with JWT-based authentication, Redis caching, and rate-limiting for security.
+Security:
 
-Features
+- Helmet, CORS, Rate Limiting (express-rate-limit & rate-limiter-flexible)
 
-API Gateway
+Dev Tools:
 
-Central entry point for routing client requests
+- Docker-ready structure, Postman-tested routes, .env support via dotenv
 
-JWT validation and token propagation
 
-Service proxying using express-http-proxy
+🧩 MICROSERVICES OVERVIEW
+-----------------------------------------------------------------------------
 
-Request logging with Winston
 
-Global Redis-backed rate limiting
+1. API Gateway
+- Central entry point for all client requests.
 
-Identity Service
+- Routes and proxies requests to underlying services using express-http-proxy.
 
-User registration & login
+- Applies global middlewares (rate limiting, logging, token validation).
 
-Secure password hashing with bcrypt
+-------------------------------------------------------------------------------
 
-JWT access & refresh token generation
+2. Identity Service
+- Handles user registration, login, and JWT token generation.
 
-Token-based authentication with role-based support
+- Secure password hashing with bcrypt.
 
-MongoDB with Mongoose for user persistence
+- Validates credentials and issues access & refresh tokens.
 
-Post Service
+------------------------------------------------------------------------------
 
-Create, fetch (with pagination), view, and delete posts
+3. Post Service
+- CRUD operations for user posts.
 
-Redis-based caching for performance
+- Pagination and Redis-based caching for read-heavy endpoints.
 
-Rate limiting per endpoint to prevent DDoS attacks
+- JWT-protected endpoints with user ownership validation.
 
-JWT-protected routes using user ID from request headers
+------------------------------------------------------------------------------
 
-Tech Stack
+🔐 Security Features
+- Redis-backed rate limiting to prevent abuse and DDoS.
 
-Languages & Frameworks: JavaScript, Node.js, Express.jsDatabases: MongoDB, RedisAuth: JWT, bcryptAPI Tools: express-http-proxy, express-rate-limit, rate-limiter-flexibleSecurity: Helmet, CORSUtilities: dotenv, Winston, Cloudinary (planned for media service)Containerization: Docker (planned)
+- JWT-based user authentication & authorization.
 
-Folder Structure
+- HTTP headers hardened via Helmet.
 
-├── api-gateway
-│   └── src
-├── identity-service
-│   └── src
-├── post-service
-│   └── src
-├── .gitignore
-├── README.md
+- CORS policy enforced for API protection.
 
-Setup Instructions
+-----------------------------------------------------------------------------
 
-1. Clone Repository
+🚀 Getting Started
+Prerequisites:
+-Node.js & npm
 
-git clone https://github.com/Karal-Marx/social-media-microservices.git
-cd social-media-microservices
+-MongoDB running locally or via MongoDB Atlas
 
-2. Set up Environment Variables
+-Redis server (locally or cloud-based)
 
-Create .env files in each service (api-gateway, identity-service, post-service) and add the required variables:
+-.env files set up in each service with relevant configs
 
-PORT
+------------------------------------------------------------------------
 
-MONGO_URI
+✅ .env (for API Gateway):
 
-JWT_SECRET
+PORT=5000
+JWT_SECRET=your_jwt_secret
+IDENTITY_SERVICE_URL=http://localhost:5001
+POST_SERVICE_URL=http://localhost:5002
+REDIS_URL=redis://localhost:6379
 
-REDIS_URL
+-------------------------------------------------------------------------
 
-IDENTITY_SERVICE_URL
+✅ .env for Identity Service
 
-POST_SERVICE_URL
+PORT=5001
+MONGO_URI=mongodb://localhost:27017/identity-db
+JWT_SECRET=your_jwt_secret
+ACCESS_TOKEN_EXPIRY=15m
+REFRESH_TOKEN_EXPIRY=7d
 
-3. Install Dependencies
+-------------------------------------------------------------------------
 
-cd api-gateway && npm install
-cd ../identity-service && npm install
-cd ../post-service && npm install
+✅ .env for Post Service
 
-4. Run Services
+PORT=5002
+MONGO_URI=mongodb://localhost:27017/post-db
+REDIS_URL=redis://localhost:6379
 
-In each service directory:
+-------------------------------------------------------------------------
 
-npm run dev
+🛠️ Running Locally
+# In each service folder (api-gateway, identity-service, post-service). Run in terminal
+>npm install
+>npm start
 
-API Endpoints
+-------------------------------------------------------------------------
 
-Identity Service
+🗂️ Folder Structure
 
-POST /v1/auth/register
+social-media-microservices/
+├── api-gateway/
+├── identity-service/
+├── post-service/
+└── README.md
 
-POST /v1/auth/login
+--------------------------------------------------------------------------
 
-Post Service (via Gateway)
+📌 Status
+✅ API Gateway, Identity Service, and Post Service fully functional and tested.
+🔄 Services can be independently scaled or extended.
 
-POST /v1/posts/create-post
+--------------------------------------------------------------------------
 
-GET /v1/posts/all-posts?page=1&limit=10
+📫 Author
+Karal Marx
+🔗 GitHub: Karal-Marx
 
-GET /v1/posts/:id
-
-DELETE /v1/posts/:id
-
-Status
-
-✅ Fully functional: API Gateway, Identity, and Post Services🛠️ Upcoming: Media Service, Search Service, Dockerization
-
-Author
-
-Karal-Marx
-
-License
-
-This project is licensed under the MIT License.
